@@ -30,6 +30,22 @@
         const data = JSON.parse(jsonString);
         const list = data.lsit;
 
+        // Создание переменой в которую будем пушить результат парсинга
+        let result = [];
+        
+        //Пушим каждого студента
+        list.forEach(element => {
+            let student = {
+                name: element.name,
+                age: element.age,
+                prof: element.prof
+            }
+            result.push(student)
+        });
+
+        // Выводим резульат в консоль
+        console.log('list', result)
+
     </script>
 </body>
 </html>
