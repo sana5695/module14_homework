@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input class="input" type="number" placeholder="1, 2, 3..." required>
+    <button class="btn" type="submit">send</button>
+    <script>
+        const input = document.querySelector('input');
+        const btn = document.querySelector('.btn');
+
+        let div = document.createElement('div');
+
+        let xhr = new XMLHttpRequest();
+
+        // Добавляем обрабочик ответа сервера
+        xhr.onload = function () {
+
+            if (xhr.status != 200) {
+                console.log('Статус ответа: ', xhr.status);
+            } else {
+                // Парсим и выводим ответ сервера
+                console.log('Результат: ', JSON.parse(xhr.response));
+            }
+        };
+
+        // Обрабочик процесса загрузки
+        xhr.onprogress = function (event) {
+            // Прогресс загрузки
+            console.log(`Загружено ${event.loaded} из ${event.total}`)
+        };
+
+        // Обрабочик ошибки
+        xhr.onerror = function () {
+            console.log('Ошибка! Статус ответа: ', xhr.status);
+        };
+
+        let limit = btn.addEventListener('click', () => {
+            let value = Number(input.value);
+            if (value < 1 || value > 10) {
+                div.innerHTML = "число вне диапазона от 1 до 10";
+                document.body.appendChild(div);
+            } else {
+                div.innerHTML = "";
+                // Инициализируем запрос
+                xhr.open('GET', `https://picsum.photos/v2/list?limit=${value}`);
+                // Отправляем запрос
+                xhr.send();
+            }
+        })
+    </script>
+</body>
+
+</html>
