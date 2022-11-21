@@ -36,13 +36,8 @@
                 div.innerHTML = "";
                 fetch(`https://picsum.photos/${valueWhidth}/${valueHight}`)
                     .then((response) => {
-                        img.innerHTML = "";
                         document.body.appendChild(img);
                         img.setAttribute("src", response.url)
-                    })
-                    .then((data) => {
-                        // Объект результата в формате JSON
-                        console.log(data);
                     })
                     .catch(() => {
                         console.log('error')
