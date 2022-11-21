@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    img {
+        display: flex;
+        margin: auto;
+    }
+</style>
+<body>
+    <input class="inputWhidth" type="number" placeholder="1, 2, 3..." required>
+    <input class="inputHight" type="number" placeholder="1, 2, 3..." required>
+    <button class="btn" type="submit">send</button>
+    <script>
+        const inputWhidth = document.querySelector('.inputWhidth');
+        const inputHight = document.querySelector('.inputHight');
+        const btn = document.querySelector('.btn');
+
+        let div = document.createElement('div');
+        let img = document.createElement('img');
+
+        let limit = btn.addEventListener('click', () => {
+            let valueWhidth = Number(inputWhidth.value);
+            let valueHight = Number(inputHight.value);
+            console.log(valueWhidth, valueHight);
+            if ((valueWhidth < 100 || valueWhidth > 300) || (valueHight < 100 || valueHight > 300)) {
+                div.innerHTML = "число вне диапазона от 100 до 300";
+                document.body.appendChild(div);
+            } else {
+                div.innerHTML = "";
+                fetch(`https://picsum.photos/${valueWhidth}/${valueHight}`)
+                    .then((response) => {
+                        img.innerHTML = "";
+                        document.body.appendChild(img);
+                        img.setAttribute("src", response.url)
+                    })
+                    .then((data) => {
+                        // Объект результата в формате JSON
+                        console.log(data);
+                    })
+                    .catch(() => {
+                        console.log('error')
+                    });
+            }
+        })
+    </script>
+
+</body>
+
+</html>
